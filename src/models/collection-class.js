@@ -28,6 +28,29 @@ class Collection {
       return err;
     }
   }
+
+  async update(id, json) {
+    try {
+      let record = await this.model.findOne({ where: { id } });
+      let updatedRecord = await record.update(json);
+
+      return updatedRecord;
+    } catch (err) {
+      return err;
+    }
+  }
+
+  async delete(id) {
+    try {
+      if (!id) {
+        throw new Error('No ID provided');
+      }
+      let response = await this.model.destroy({ where: { id } });
+      return response;
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 module.exports = Collection;
